@@ -1,1 +1,14 @@
 <div id="app"></div>
+<svg width="640" height="480" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
+        <g class="layer">
+            <rect stroke="#000000" id="left_rod" x-data="0" height="230" width="16" y="100" x="128" fill="#bf5f00" onclick="putOnRod(this)"/>
+            <rect stroke="#000000" id="center_rod" x-data="1" height="230" width="16" y="100" x="297" fill="#bf5f00" onclick="putOnRod(this)"/>
+            <rect stroke="#000000" id="right_rod" x-data="2" height="230" width="16" y="100" x="466" fill="#bf5f00" onclick="putOnRod(this)"/>
+            <rect stroke="#000000" id="base" width="600" height="30" y="330" x="10" fill="#bf5f00"/>
+            <rect stroke="#000000" id="disk_0" x-data="0" width="128" height="16" y="314" x="72" transform="translate(0, 0)" fill="#7f7f7f" onclick="selectDisk(this)"/>
+            <rect stroke="#000000" id="disk_1" x-data="1" width="112" height="16" y="314" x="80" transform="translate(0, -16)" fill="#7f7f7f" onclick="selectDisk(this)"/>
+            <rect stroke="#000000" id="disk_2" x-data="2" width="96" height="16" y="314" x="88" transform="translate(0, -32)" fill="#7f7f7f" onclick="selectDisk(this)"/>
+            <rect stroke="#000000" id="disk_3" x-data="3" width="80" height="16" y="314" x="96" transform="translate(0, -48)" fill="#7f7f7f" onclick="selectDisk(this)"/>
+            <rect stroke="#000000" id="disk_4" x-data="4" width="64" height="16" y="314" x="104" transform="translate(0, -64)" fill="#7f7f7f" onclick="selectDisk(this)"/>
+        </g>
+    </svg>
