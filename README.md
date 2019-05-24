@@ -1,3 +1,3 @@
-# js-usw8me
+# js-dojo-hanoi-tower
 
-[Edit on StackBlitz ⚡️](https://stackblitz.com/edit/js-usw8me)
+[Edit on StackBlitz ⚡️](https://stackblitz.com/edit/js-dojo-hanoi-tower)
