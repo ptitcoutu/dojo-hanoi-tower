@@ -35,10 +35,9 @@ function putOnRod(rod) {
       var previousRod = rods[diskRods[previousSelectedDiskIndex]];
       newRod.push(previousRod.pop());
       diskRods[previousSelectedDiskIndex] = rodIndex;
-      var translationX = 169 * rodIndex;
-      var translationY = -16 * (newRod.length - 1);
-      previousSelectedDisk.setAttribute('transform', `translate(${translationX},${translationY})`);
+      displayDisksOnRod(rodIndex);
       deselectPreviouslySelectedDisk();
+      document.getElementById("steps").value = document.getElementById("steps").value + JSON.stringify(rods) + "\n"
     }
   }
 }
@@ -48,6 +47,51 @@ function deselectPreviouslySelectedDisk() {
     previousSelectedDisk = null;
   }
 }
+function playStep(stepIndex) {
+    rods = gameSteps[stepIndex];
+    displayDisksOnRod(0);
+    displayDisksOnRod(1);
+    displayDisksOnRod(2);
+    stepIndex++;
+    if (stepIndex<gameSteps.length) {
+      setTimeout(() => {
+        playStep(stepIndex);
+      },500);
+    }
+}
+var gameSteps
+function replay() {
+  var scenario = document.getElementById("steps").value;
+  gameSteps = JSON.parse("["+scenario.replace(/\n/g,',')+"]");
+  playStep(0);
+}
 
-document.selectDisk = selectDisk
-document.putOnRod = putOnRod
+function reset() {
+  rods = [[0, 1, 2, 3, 4], [], []];
+  diskRods = [0, 0, 0, 0, 0];
+  displayDisksOnRod(0);
+  deselectPreviouslySelectedDisk();
+  document.getElementById("steps").value = '[[0,1,2,3,4],[],[]]\n';
+}
+
+function displayDisksOnRod(rodIndex) {
+   var rodConfiguration = rods[rodIndex];
+   var diskPosition = 0;
+   rodConfiguration.forEach( (diskIndex) => {
+     var translationX = 169 * rodIndex;
+     var translationY = -16 * diskPosition;
+     var disk = document.getElementById("disk_"+diskIndex);
+     disk.setAttribute('transform',`translate(${translationX},${translationY})`);
+     diskPosition++;
+   })
+}
+
+function solve() {
+  alert('solve to implement');
+}
+
+document.selectDisk = selectDisk;
+document.putOnRod = putOnRod;
+document.replay = replay;
+document.reset = reset;
+document.solve = solve;
