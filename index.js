@@ -1,10 +1,11 @@
 // Import stylesheets
 import './style.css';
+import { moveDisksRecursively } from './recursiveSolution.js'
 
 // Write Javascript code!
 const appDiv = document.getElementById('app');
-appDiv.innerHTML = `<h1>Hanoi Tower</h1>`;
-const allDisks = [0,1,2,3,4]
+appDiv.innerHTML = `<h1>Hanoi Towers</h1>`;
+const allDisks = [0, 1, 2, 3, 4]
 var diskCount = allDisks.length;
 var rods = [allDisks, [], []];
 var diskRods = allDisks.map((diskIndex) => 0);
@@ -28,6 +29,10 @@ function itemIndex(item) {
 }
 function putOnRod(rod) {
   var rodIndex = itemIndex(rod);
+  putOnRodWithIndex(rodIndex)
+}
+
+function putOnRodWithIndex(rodIndex) {
   if (previousSelectedDisk) {
     var newRod = rods[rodIndex];
     var diskIndex = itemIndex(previousSelectedDisk);
@@ -68,17 +73,17 @@ function replay() {
 }
 
 function reset() {
-  var visibleDisks = allDisks.filter((diskIndex)=> diskIndex<diskCount)
+  var visibleDisks = allDisks.filter((diskIndex) => diskIndex < diskCount)
   rods = [visibleDisks, [], []];
   diskRods = rods[0].map((disk) => 0);
   displayDisksOnRod(0);
   allDisks.forEach((diskIndex) => {
     var disk = getDisk(diskIndex);
-    disk.setAttribute("visibility","hidden")
+    disk.setAttribute("visibility", "hidden")
   });
   visibleDisks.forEach((diskIndex) => {
     var disk = getDisk(diskIndex);
-    disk.setAttribute("visibility","visible")
+    disk.setAttribute("visibility", "visible")
   });
   deselectPreviouslySelectedDisk();
   changeStepsValue('[[' + visibleDisks.join(',') + '],[],[]]\n');
@@ -113,12 +118,27 @@ function getStepsValue() {
 }
 
 function solve() {
-  alert('solve to implement');
+  moveDisksRecursively(diskCount, 0, 2, 1)
+}
+
+function moveDisks(numberOfDiskToMove, startRodIndex, targetRodIndex, intermediaryRodIndex) {
+  window.alert('to be implemented')
+}
+
+function moveDisk(startRodIndex, targetRodIndex) {
+  selectDiskOnTopOfRod(startRodIndex);
+  putOnRodWithIndex(targetRodIndex);
+}
+function selectDiskOnTopOfRod(rodIndex) {
+  var rod = rods[rodIndex];
+  var diskIndex = rod[rod.length - 1];
+  var disk = getDisk(diskIndex);
+  selectDisk(disk);
 }
 
 function initHanoi(diskCountSelector) {
-    diskCount = diskCountSelector.selectedIndex+1;
-    reset();
+  diskCount = diskCountSelector.selectedIndex + 1;
+  reset();
 }
 
 document.initHanoi = initHanoi;
@@ -127,3 +147,4 @@ document.putOnRod = putOnRod;
 document.replay = replay;
 document.reset = reset;
 document.solve = solve;
+document.moveDisk = moveDisk
