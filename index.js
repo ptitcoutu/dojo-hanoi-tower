@@ -113,7 +113,28 @@ function getStepsValue() {
 }
 
 function solve() {
-  alert('solve to implement');
+  moveDisks(diskCount, 0, 2, 1)
+}
+
+function moveDisks(numberOfDiskToMove, startRodIndex, targetRodIndex, intermediaryRodIndex) {
+  if (numberOfDiskToMove == 1) {
+    moveDisk(startRodIndex, targetRodIndex)
+  } else {
+    moveDisks(numberOfDiskToMove-1, startRodIndex, intermediaryRodIndex, targetRodIndex);
+    moveDisk(startRodIndex, targetRodIndex);
+    moveDisks(numberOfDiskToMove-1, intermediaryRodIndex, targetRodIndex);
+  }
+}
+
+function moveDisk(startRod, targetRod) {
+  selectDiskOnTopOfRod(startRod);
+  putOnRod(targetRod);
+}
+function selectDiskOnTopOfRod(rodIndex) {
+  var rod = rods[rodIndex];
+  var diskIndex = rod[rod.length-1];
+  var disk = getDisk(diskIndex);
+  selectDisk(disk);
 }
 
 function initHanoi(diskCountSelector) {
