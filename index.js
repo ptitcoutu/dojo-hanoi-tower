@@ -1,12 +1,14 @@
 // Import stylesheets
 import './style.css';
+import { moveDisksRecursively } from './recursiveSolution.js'
 
 // Write Javascript code!
 const appDiv = document.getElementById('app');
-appDiv.innerHTML = `<h1>Hanoi Tower</h1>`;
-
-var rods = [[0, 1, 2, 3, 4], [], []];
-var diskRods = [0, 0, 0, 0, 0];
+appDiv.innerHTML = `<h1>Hanoi Towers</h1>`;
+const allDisks = [0, 1, 2, 3, 4]
+var diskCount = allDisks.length;
+var rods = [allDisks, [], []];
+var diskRods = allDisks.map((diskIndex) => 0);
 var previousSelectedDisk = null;
 
 function selectDisk(disk) {
@@ -27,6 +29,10 @@ function itemIndex(item) {
 }
 function putOnRod(rod) {
   var rodIndex = itemIndex(rod);
+  putOnRodWithIndex(rodIndex)
+}
+
+function putOnRodWithIndex(rodIndex) {
   if (previousSelectedDisk) {
     var newRod = rods[rodIndex];
     var diskIndex = itemIndex(previousSelectedDisk);
@@ -37,7 +43,7 @@ function putOnRod(rod) {
       diskRods[previousSelectedDiskIndex] = rodIndex;
       displayDisksOnRod(rodIndex);
       deselectPreviouslySelectedDisk();
-      document.getElementById("steps").value = document.getElementById("steps").value + JSON.stringify(rods) + "\n"
+      addStepToSteps(JSON.stringify(rods) + "\n")
     }
   }
 }
@@ -48,50 +54,97 @@ function deselectPreviouslySelectedDisk() {
   }
 }
 function playStep(stepIndex) {
-    rods = gameSteps[stepIndex];
-    displayDisksOnRod(0);
-    displayDisksOnRod(1);
-    displayDisksOnRod(2);
-    stepIndex++;
-    if (stepIndex<gameSteps.length) {
-      setTimeout(() => {
-        playStep(stepIndex);
-      },500);
-    }
+  rods = gameSteps[stepIndex];
+  displayDisksOnRod(0);
+  displayDisksOnRod(1);
+  displayDisksOnRod(2);
+  stepIndex++;
+  if (stepIndex < gameSteps.length) {
+    setTimeout(() => {
+      playStep(stepIndex);
+    }, 500);
+  }
 }
 var gameSteps
 function replay() {
-  var scenario = document.getElementById("steps").value;
-  gameSteps = JSON.parse("["+scenario.replace(/\n/g,',')+"]");
+  var scenario = getStepsValue();
+  gameSteps = JSON.parse("[" + scenario.replace(/\n/g, ',') + "]");
   playStep(0);
 }
 
 function reset() {
-  rods = [[0, 1, 2, 3, 4], [], []];
-  diskRods = [0, 0, 0, 0, 0];
+  var visibleDisks = allDisks.filter((diskIndex) => diskIndex < diskCount)
+  rods = [visibleDisks, [], []];
+  diskRods = rods[0].map((disk) => 0);
   displayDisksOnRod(0);
+  allDisks.forEach((diskIndex) => {
+    var disk = getDisk(diskIndex);
+    disk.setAttribute("visibility", "hidden")
+  });
+  visibleDisks.forEach((diskIndex) => {
+    var disk = getDisk(diskIndex);
+    disk.setAttribute("visibility", "visible")
+  });
   deselectPreviouslySelectedDisk();
-  document.getElementById("steps").value = '[[0,1,2,3,4],[],[]]\n';
+  changeStepsValue('[[' + visibleDisks.join(',') + '],[],[]]\n');
 }
 
 function displayDisksOnRod(rodIndex) {
-   var rodConfiguration = rods[rodIndex];
-   var diskPosition = 0;
-   rodConfiguration.forEach( (diskIndex) => {
-     var translationX = 169 * rodIndex;
-     var translationY = -16 * diskPosition;
-     var disk = document.getElementById("disk_"+diskIndex);
-     disk.setAttribute('transform',`translate(${translationX},${translationY})`);
-     diskPosition++;
-   })
+  var rodConfiguration = rods[rodIndex];
+  var diskPosition = 0;
+  rodConfiguration.forEach((diskIndex) => {
+    var translationX = 169 * rodIndex;
+    var translationY = -16 * diskPosition;
+    var disk = getDisk(diskIndex);
+    disk.setAttribute('transform', `translate(${translationX},${translationY})`);
+    diskPosition++;
+  })
+}
+
+function getDisk(diskIndex) {
+  return document.getElementById("disk_" + diskIndex)
+}
+
+function changeStepsValue(value) {
+  document.getElementById("steps").value = value;
+}
+
+function addStepToSteps(valueToAdd) {
+  changeStepsValue(getStepsValue() + valueToAdd)
+}
+
+function getStepsValue() {
+  return document.getElementById("steps").value
 }
 
 function solve() {
-  alert('solve to implement');
+  moveDisksRecursively(diskCount, 0, 2, 1)
 }
 
+function moveDisks(numberOfDiskToMove, startRodIndex, targetRodIndex, intermediaryRodIndex) {
+  window.alert('to be implemented')
+}
+
+function moveDisk(startRodIndex, targetRodIndex) {
+  selectDiskOnTopOfRod(startRodIndex);
+  putOnRodWithIndex(targetRodIndex);
+}
+function selectDiskOnTopOfRod(rodIndex) {
+  var rod = rods[rodIndex];
+  var diskIndex = rod[rod.length - 1];
+  var disk = getDisk(diskIndex);
+  selectDisk(disk);
+}
+
+function initHanoi(diskCountSelector) {
+  diskCount = diskCountSelector.selectedIndex + 1;
+  reset();
+}
+
+document.initHanoi = initHanoi;
 document.selectDisk = selectDisk;
 document.putOnRod = putOnRod;
 document.replay = replay;
 document.reset = reset;
 document.solve = solve;
+document.moveDisk = moveDisk
