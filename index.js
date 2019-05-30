@@ -4,7 +4,7 @@ import './style.css';
 // Write Javascript code!
 const appDiv = document.getElementById('app');
 appDiv.innerHTML = `<h1>Hanoi Tower</h1>`;
-
+var diskCount = 5;
 var rods = [[0, 1, 2, 3, 4], [], []];
 var diskRods = [0, 0, 0, 0, 0];
 var previousSelectedDisk = null;
@@ -90,6 +90,11 @@ function solve() {
   alert('solve to implement');
 }
 
+function initHanoi(pDiskCount) {
+   diskCount = pDiskCount;
+   reset();
+}
+document.initHanoi = initHanoi;
 document.selectDisk = selectDisk;
 document.putOnRod = putOnRod;
 document.replay = replay;

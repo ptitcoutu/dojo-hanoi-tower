@@ -1,4 +1,11 @@
 <div id="app"></div>
+<select name="diskCount" onchange="initHanoi()">
+  <option onselect="initHanoi(1)">1 disk</option>
+  <option onselect="initHanoi(2)">2 disks</option>
+  <option onselect="initHanoi(3)">3 disks</option>
+  <option onselect="initHanoi(4)">4 disks</option>
+  <option onselect="initHanoi(5)" selected>5 disks</option>
+</select><br>
 <svg width="620" height="360" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
 	<g class="layer">
 		<rect stroke="#000000" id="left_rod" x-data="0" height="230" width="16" y="100" x="128" fill="#bf5f00" onclick="putOnRod(this)"
