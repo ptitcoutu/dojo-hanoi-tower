@@ -4,7 +4,7 @@ import { moveDisksRecursively } from './recursiveSolution.js'
 
 // Write Javascript code!
 const appDiv = document.getElementById('app');
-appDiv.innerHTML = `<h1>Hanoi Tower</h1>`;
+appDiv.innerHTML = `<h1>Hanoi Towers</h1>`;
 const allDisks = [0, 1, 2, 3, 4]
 var diskCount = allDisks.length;
 var rods = [allDisks, [], []];
