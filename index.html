@@ -1,4 +1,4 @@
-<div id="app"></div>
+<h1>Hanoi Towers</h1>
 <select name="diskCount" onchange="initHanoi(this)">
   <option>1 disk</option>
   <option>2 disks</option>
@@ -27,8 +27,9 @@
 		 onclick="selectDisk(this)" />
 	</g>
 </svg>
-<textarea id="steps">[[0,1,2,3,4],[],[]]
-</textarea><br>
 <button type="button" onclick="reset()">Reset</button>
 <button type="button" onclick="replay()">Replay</button>
 <button type="button" onclick="solve()">Solve</button>
+<button type="button" onclick="check()">Check</button><br>
+<textarea id="steps">[[0,1,2,3,4],[],[]]</textarea>
+<textarea id="stepsCheck">OK</textarea><br>
