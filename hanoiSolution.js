@@ -1,5 +1,7 @@
+
+
 function moveDisks(numberOfDiskToMove, startRodIndex, targetRodIndex, intermediaryRodIndex) {
-   window.alert('to be implemented')
+   document.moveDisk(0, 2)
 }
 
 exports.moveDisks = moveDisks
